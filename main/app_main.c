@@ -37,7 +37,7 @@
 
 static const char *TAG = "MQTT_EXAMPLE";
 
-#define CONFIG_BROKER_URL "mqtt://sebi:admin@192.168.1.4:1883"
+//#define CONFIG_BROKER_URL "mqtt://sebi:admin@192.168.1.4:1883"
 
 #define EXAMPLE_ESP_WIFI_SSID      "SebiWi2Fi"
 #define EXAMPLE_ESP_WIFI_PASS      "Fbtksd11"
