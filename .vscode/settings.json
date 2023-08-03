@@ -11,7 +11,6 @@
     "idf.openOcdConfigs": [
         "board/esp32-bridge.cfg"
     ],
-    "idf.portWin": "COM7",
     "idf.pythonBinPathWin": "C:\\Users\\Sebi\\.espressif\\python_env\\idf5.0_py3.11_env\\Scripts\\python.exe",
     "idf.toolsPathWin": "C:\\Users\\Sebi\\.espressif"
 }
