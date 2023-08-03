@@ -21,7 +21,8 @@
         "task.h": "c",
         "freertos.h": "c",
         "mqtt.h": "c",
-        "esp_event.h": "c"
+        "esp_event.h": "c",
+        "camera.h": "c"
     },
     "idf.portWin": "COM6",
     "idf.flashType": "UART"
