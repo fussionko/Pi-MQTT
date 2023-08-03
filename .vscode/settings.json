@@ -12,5 +12,10 @@
         "board/esp32-bridge.cfg"
     ],
     "idf.pythonBinPathWin": "C:\\Users\\Sebi\\.espressif\\python_env\\idf5.0_py3.11_env\\Scripts\\python.exe",
-    "idf.toolsPathWin": "C:\\Users\\Sebi\\.espressif"
+    "idf.toolsPathWin": "C:\\Users\\Sebi\\.espressif",
+    "files.associations": {
+        "mqtt_client.h": "c"
+    },
+    "idf.portWin": "COM6",
+    "idf.flashType": "UART"
 }
