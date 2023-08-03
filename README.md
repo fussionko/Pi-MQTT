@@ -33,3 +33,6 @@ Below is short explanation of remaining files in the project folder.
 ```
 Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
 They are not used or needed when building with CMake and idf.py.
+
+https://esp32tutorials.com/esp32-mqtt-client-publish-subscribe-esp-idf/
+https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/#mosquitto-set-user-password
