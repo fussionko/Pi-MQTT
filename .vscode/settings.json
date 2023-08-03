@@ -14,7 +14,14 @@
     "idf.pythonBinPathWin": "C:\\Users\\Sebi\\.espressif\\python_env\\idf5.0_py3.11_env\\Scripts\\python.exe",
     "idf.toolsPathWin": "C:\\Users\\Sebi\\.espressif",
     "files.associations": {
-        "mqtt_client.h": "c"
+        "mqtt_client.h": "c",
+        "random": "c",
+        "queue.h": "c",
+        "semphr.h": "c",
+        "task.h": "c",
+        "freertos.h": "c",
+        "mqtt.h": "c",
+        "esp_event.h": "c"
     },
     "idf.portWin": "COM6",
     "idf.flashType": "UART"
