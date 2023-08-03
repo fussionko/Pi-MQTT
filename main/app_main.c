@@ -25,17 +25,9 @@
 
 #include "mqtt.h"
 #include "wifi.h"
+#include "camera.h"
 
 static const char* TAG = "Main";
-
-#include "esp_camera.h"
-
-
-
-
-
-
-
 
 
 void app_main(void)

@@ -5,9 +5,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "esp_camera.h"
 
-#include "esp_err.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
 
@@ -44,7 +42,7 @@ const static camera_config_t camera_config = {
     .grab_mode = CAMERA_GRAB_WHEN_EMPTY//CAMERA_GRAB_LATEST. Sets when buffers should be filled
 };
 
-esp_err_t camera_capture(camera_fb_t* image)
+esp_err_t camera_capture_frame(camera_fb_t* image)
 {
     camera_fb_t* temp_image = esp_camera_fb_get();
     if (temp_image == NULL) 
@@ -56,8 +54,8 @@ esp_err_t camera_capture(camera_fb_t* image)
     // //replace this with your own function
     // process_image(fb->width, fb->height, fb->format, fb->buf, fb->len);
     
-    // Copy temp_image pointer to image
-    memcpy(image, temp_image, sizeof(camera_fb_t*));
+    // Copy temp_image pointer data to image
+    memcpy(image, temp_image, sizeof(camera_fb_t));
 
     // Return the frame buffer back to the driver for reuse
     esp_camera_fb_return(temp_image);
