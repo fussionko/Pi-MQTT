@@ -74,14 +74,15 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         const uint8_t quality = 80;
     
         ESP_LOGI(TAG, "FRAME Size -> h: %d w: %d len: %d", fb->height, fb->width, fb->len);
-        if (frame2jpg(fb, quality, &jpg_buf, &jpg_buf_len) == false)
-        {
-            ESP_LOGE(TAG, "Error when converting camera frame to jpg");
-            return;
-        }
-        ESP_LOGI(TAG, "JPG Size -> len: %d", jpg_buf_len);
-        int mqtt_ret = esp_mqtt_client_enqueue(client, "/data", (const char*)jpg_buf, jpg_buf_len, 1, 0, 0);
-        ESP_LOGI(TAG, "Send data ==> %d", mqtt_ret);
+        // if (frame2jpg(fb, quality, &jpg_buf, &jpg_buf_len) == false)
+        // {
+        //     ESP_LOGE(TAG, "Error when converting camera frame to jpg");
+        //     return;
+        // }
+        // ESP_LOGI(TAG, "JPG Size -> len: %d", jpg_buf_len);
+        // int mqtt_ret = esp_mqtt_client_enqueue(client, "/data", (const char*)jpg_buf, jpg_buf_len, 1, 0, 0);
+        int mqtt_ret = esp_mqtt_client_enqueue(client, "/data", (const char*)fb->buf, fb->len, 1, 0, 0);
+        ESP_LOGI(TAG, "Send data ==> msg id: %d", mqtt_ret);
 
         esp_camera_fb_return(fb);
 
