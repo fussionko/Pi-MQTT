@@ -22,8 +22,9 @@
         "freertos.h": "c",
         "mqtt.h": "c",
         "esp_event.h": "c",
-        "camera.h": "c"
+        "camera.h": "c",
+        "esp_log.h": "c"
     },
-    "idf.portWin": "COM6",
+    "idf.portWin": "COM7",
     "idf.flashType": "UART"
 }

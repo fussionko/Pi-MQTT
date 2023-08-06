@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+
 #include "esp_wifi.h"
 #include "esp_system.h"
 #include "nvs_flash.h"
@@ -20,11 +21,11 @@
 #include "lwip/netdb.h"
 
 #include "esp_log.h"
-#include "mqtt_client.h"
+
 
 static const char* TAG = "MQTT";
 
-static esp_mqtt_client_handle_t client_handle;
+
 
 static void log_error_if_nonzero(const char *message, int error_code)
 {
@@ -32,6 +33,8 @@ static void log_error_if_nonzero(const char *message, int error_code)
         ESP_LOGE(TAG, "Last error %s: 0x%x", message, error_code);
     }
 }
+#include "camera.h"
+
 
 /*
  * @brief Event handler registered to receive MQTT events
@@ -51,18 +54,37 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
     int msg_id;
     switch ((esp_mqtt_event_id_t)event_id) {
     case MQTT_EVENT_CONNECTED:
-        ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
-        msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1, 0);
-        ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
+        // ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
+        // msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1, 0);
+        // ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 
-        msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
-        ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
+        // msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
+        // ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
 
-        msg_id = esp_mqtt_client_subscribe(client, "/topic/qos1", 1);
-        ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
+        // msg_id = esp_mqtt_client_subscribe(client, "/topic/qos1", 1);
+        // ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
 
-        msg_id = esp_mqtt_client_unsubscribe(client, "/topic/qos1");
-        ESP_LOGI(TAG, "sent unsubscribe successful, msg_id=%d", msg_id);
+        // msg_id = esp_mqtt_client_unsubscribe(client, "/topic/qos1");
+        // ESP_LOGI(TAG, "sent unsubscribe successful, msg_id=%d", msg_id);
+
+        camera_fb_t* fb = esp_camera_fb_get();
+        uint8_t* jpg_buf = NULL;
+        size_t jpg_buf_len = 0;
+
+        const uint8_t quality = 80;
+    
+        ESP_LOGI(TAG, "FRAME Size -> h: %d w: %d len: %d", fb->height, fb->width, fb->len);
+        if (frame2jpg(fb, quality, &jpg_buf, &jpg_buf_len) == false)
+        {
+            ESP_LOGE(TAG, "Error when converting camera frame to jpg");
+            return;
+        }
+        ESP_LOGI(TAG, "JPG Size -> len: %d", jpg_buf_len);
+        int mqtt_ret = esp_mqtt_client_enqueue(client, "/data", (const char*)jpg_buf, jpg_buf_len, 1, 0, 0);
+        ESP_LOGI(TAG, "Send data ==> %d", mqtt_ret);
+
+        esp_camera_fb_return(fb);
+
         break;
     case MQTT_EVENT_DISCONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
@@ -70,8 +92,8 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
     case MQTT_EVENT_SUBSCRIBED:
         ESP_LOGI(TAG, "MQTT_EVENT_SUBSCRIBED, msg_id=%d", event->msg_id);
-        msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "data", 0, 0, 0);
-        ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
+        // msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "data", 0, 0, 0);
+        // ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
         break;
     case MQTT_EVENT_UNSUBSCRIBED:
         ESP_LOGI(TAG, "MQTT_EVENT_UNSUBSCRIBED, msg_id=%d", event->msg_id);
@@ -142,3 +164,4 @@ void mqtt_start(void)
 {
     esp_mqtt_client_start(client_handle);
 }
+

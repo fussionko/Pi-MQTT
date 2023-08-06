@@ -39,13 +39,14 @@ const static camera_config_t camera_config = {
 
     .jpeg_quality = 12, //0-63, for OV series camera sensors, lower number means higher quality
     .fb_count = 1, //When jpeg mode is used, if fb_count more than one, the driver will work in continuous mode.
-    .grab_mode = CAMERA_GRAB_WHEN_EMPTY//CAMERA_GRAB_LATEST. Sets when buffers should be filled
+    .grab_mode = CAMERA_GRAB_WHEN_EMPTY,//CAMERA_GRAB_LATEST. Sets when buffers should be filled
 };
 
-esp_err_t camera_capture_frame(camera_fb_t* image)
+esp_err_t camera_capture_frame(camera_fb_t* fb)
 {
-    camera_fb_t* temp_image = esp_camera_fb_get();
-    if (temp_image == NULL) 
+    //camera_fb_t* tmp_fb = esp_camera_fb_get();
+    fb = esp_camera_fb_get();
+    if (fb == NULL) 
     {
         ESP_LOGE(TAG, "Camera Capture Failed");
         return ESP_FAIL;
@@ -53,15 +54,32 @@ esp_err_t camera_capture_frame(camera_fb_t* image)
 
     // //replace this with your own function
     // process_image(fb->width, fb->height, fb->format, fb->buf, fb->len);
-    
+    //ESP_LOGI(TAG, "Size -> h: %d w: %d len: %d", tmp_fb->height, tmp_fb->width, tmp_fb->len);
+    // fb = (camera_fb_t*)malloc(sizeof(camera_fb_t));
+    // if (fb == NULL) 
+    // {
+    //     ESP_LOGE(TAG, "Allocate camera frame space error");
+    //     return ESP_FAIL;
+    // }
+    // fb->buf = (uint8_t*)malloc(fb->len * sizeof(uint8_t));
+    // if (fb->buf == NULL) 
+    // {
+    //     ESP_LOGE(TAG, "Allocate camera frame space error");
+    //     return ESP_FAIL;
+    // }
+
     // Copy temp_image pointer data to image
-    memcpy(image, temp_image, sizeof(camera_fb_t));
+    // memcpy(fb, tmp_fb, sizeof(camera_fb_t));
+    // memcpy(fb->buf, tmp_fb->buf, fb->len * sizeof(uint8_t));
 
     // Return the frame buffer back to the driver for reuse
-    esp_camera_fb_return(temp_image);
+    // esp_camera_fb_return(tmp_fb);
 
     return ESP_OK;
 }
+
+
+
 
 esp_err_t camera_init()
 {

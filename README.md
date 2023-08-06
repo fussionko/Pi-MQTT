@@ -56,3 +56,5 @@ TOPIC=/topic/qos0
 DATA=data
 ```
 https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/
+https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
+mosquitto_sub -v -h broker_ip -p 1883 -t '#'

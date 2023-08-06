@@ -29,6 +29,7 @@
 
 static const char* TAG = "Main";
 
+#include "mqtt_client.h"
 
 void app_main(void)
 {
@@ -54,15 +55,40 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     // Init wifi connection
+    ESP_LOGI(TAG, "Wifi init");
     wifi_init_sta();
 
     // Init MQTT connection
+    ESP_LOGI(TAG, "MQTT Init");
     mqtt_init();
     // Start MQTT 
+    ESP_LOGI(TAG, "MQTT Start");
     mqtt_start();
 
     // Init camera
+    ESP_LOGI(TAG, "Camera Init");
     camera_init();
 
+    // Send image
+    // camera_fb_t* fb = esp_camera_fb_get();
+    //ESP_ERROR_CHECK(camera_capture_frame(fb));
+    
+    uint8_t* jpg_buf = NULL;
+    size_t jpg_buf_len = 0;
 
+    const uint8_t quality = 80;
+    
+    //ESP_LOGI(TAG, "Size -> h: %d w: %d ", fb->height, fb->width);
+    // if (frame2jpg(fb, quality, &jpg_buf, &jpg_buf_len) == false)
+    // {1
+    //     ESP_LOGE(TAG, "Error when converting camera frame to jpg");
+    //     return;
+    // }
+
+    //vTaskDelay(3000 / portTICK_PERIOD_MS);
+    // int mqtt_ret = esp_mqtt_client_enqueue(client_handle, "/data", (const char*)fb->buf, fb->len, 1, 0, 0);
+    // ESP_LOGI(TAG, "Send data ==> %d", mqtt_ret);
+
+    // esp_camera_fb_return(fb);
+    // free(fb);
 }
