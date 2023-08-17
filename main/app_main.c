@@ -30,9 +30,11 @@
 static const char* TAG = "Main";
 
 #include "mqtt_client.h"
+#include "cdm324.h"
 
 void app_main(void)
 {
+    printf("%d", lol());
     ESP_LOGI(TAG, "[APP] Startup..");
     ESP_LOGI(TAG, "[APP] Free memory: %"PRIu32" bytes", esp_get_free_heap_size());
     ESP_LOGI(TAG, "[APP] IDF version: %s", esp_get_idf_version());
