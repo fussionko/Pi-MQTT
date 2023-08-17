@@ -1,0 +1,3 @@
+[submodule "main/components/cdm324/cdm324-speed-detector"]
+	path = main/components/cdm324/cdm324-speed-detector
+	url = https://github.com/fussionko/cdm324-speed-detector
